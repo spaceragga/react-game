@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+import useSound from 'use-sound';
+
+import sound from '../sound/02-a-type-music-version-1_1.mp3';
+
 import { createStage, checkCollision } from '../gameHelpers';
 import { StyledTetrisWrapper, StyledTetris } from './styles/StyledTetris';
 
@@ -13,10 +17,14 @@ import { useGameStatus } from '../hooks/useGameStatus';
 import Stage from './Stage';
 import Display from './Display';
 import StartButton from './StartButton';
+import Settings from './Settings';
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [volume, setVolume] = useState(0.25);
+
+  const [play] = useSound(sound, { volume });
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
@@ -50,7 +58,12 @@ const Tetris = () => {
     setLevel(0);
     setRows(0);
     setGameOver(false);
+    play();
   };
+
+  const changeVolume = (value) => {
+    setVolume(value)
+  }
 
   const drop = () => {
     // Increase level when player has cleared 10 rows
@@ -120,6 +133,7 @@ const Tetris = () => {
             </div>
           )}
           <StartButton callback={startGame} />
+          <Settings changeVolume={changeVolume} volume={volume} />
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>
