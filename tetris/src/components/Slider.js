@@ -3,11 +3,9 @@ import { StyledModalBtn } from "./styles/StyledModal";
 import { StyledSliderText } from "./styles/StyledSlider";
 
 
-function Slider({ handleVolume, volume }) {
+function Slider({ title, handleVolume, volume }) {
   const [muted, setMuted] = useState(false);
   const finalVolume = muted ? 0 : volume ** 2;
-
-
 
   return (
     <main>
@@ -22,12 +20,16 @@ function Slider({ handleVolume, volume }) {
             handleVolume(event.target.valueAsNumber)
           }}
         />
-        <StyledModalBtn onClick={() => setMuted(m => !m)}>
+        <StyledModalBtn onClick={() => setMuted(m => {
+          m ? handleVolume(0.25) : handleVolume(0);
+          return !m;
+          })}>
+        {/* <StyledModalBtn onClick={() => setMuted(m => !m)}> */}
           {muted ? "muted" : "unmuted"}
         </StyledModalBtn>
       </section>
       <section>
-        <StyledSliderText>final volume: {finalVolume.toFixed(3)}</StyledSliderText>
+        <StyledSliderText>{title} {finalVolume.toFixed(3)}</StyledSliderText>
       </section>
     </main>
   );

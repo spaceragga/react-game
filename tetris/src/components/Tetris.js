@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import useSound from 'use-sound';
 
 import sound from '../sound/02-a-type-music-version-1_1.mp3';
+import revert from '../sound/revert.mp3';
+import moveBr from '../sound/leftRight.mp3';
 
 import { createStage, checkCollision } from '../gameHelpers';
 import { StyledTetrisWrapper, StyledTetris } from './styles/StyledTetris';
@@ -22,9 +24,12 @@ import Settings from './Settings';
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
-  const [volume, setVolume] = useState(0.25);
+  const [volumeMusic, setVolumeMusic] = useState(0.25);
+  const [volumeSound, setVolumeSound] = useState(0.25);
 
-  const [play] = useSound(sound, { volume });
+  const [play] = useSound(sound, { volume: volumeMusic });
+  const [moveBrick] = useSound(moveBr, { volume: volumeSound });
+  const [revertBrick] = useSound(revert, { volume: volumeSound });
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
@@ -61,8 +66,12 @@ const Tetris = () => {
     play();
   };
 
-  const changeVolume = (value) => {
-    setVolume(value)
+  const changeVolumeMusic = (value) => {
+    setVolumeMusic(value);
+  }
+
+  const changeVolumeSound = (value) => {
+    setVolumeSound(value);
   }
 
   const drop = () => {
@@ -103,12 +112,15 @@ const Tetris = () => {
     if (!gameOver) {
       if (keyCode === 37) {
         movePlayer(-1);
+        moveBrick();
       } else if (keyCode === 39) {
         movePlayer(1);
+        moveBrick();
       } else if (keyCode === 40) {
         dropPlayer();
       } else if (keyCode === 38) {
         playerRotate(stage, 1);
+        revertBrick();
       }
     }
   };
@@ -133,7 +145,11 @@ const Tetris = () => {
             </div>
           )}
           <StartButton callback={startGame} />
-          <Settings changeVolume={changeVolume} volume={volume} />
+          <Settings
+           changeVolumeMusic={changeVolumeMusic}
+           changeVolumeSound={changeVolumeSound}
+           volumeMusic={volumeMusic}
+           volumeSound={volumeSound} />
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>

@@ -21,6 +21,7 @@ class Settings extends Component {
     this.hideModal = this.hideModal.bind(this);
   }
 
+
   showModal = () => {
     this.setState({ show: true });
   };
@@ -33,11 +34,15 @@ class Settings extends Component {
 
   
   render() {
+    
+  const { changeVolumeMusic, changeVolumeSound, volumeMusic, volumeSound } = this.props;
+
     return (
       <div>
         <Modal show={this.state.show} handleClose={this.hideModal} >
           <StyledSettingHeader>Settings</StyledSettingHeader>
-          <Slider handleVolume={this.props.changeVolume} volume={this.props.volume} />
+          <Slider title='Music sound' handleVolume={changeVolumeMusic} volume={volumeMusic} />
+          <Slider title='Sound effect' handleVolume={changeVolumeSound} volume={volumeSound} />
         </Modal>
         <StyledSettingButton type="button" onClick={this.showModal}>
         Settings
