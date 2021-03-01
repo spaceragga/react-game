@@ -19,5 +19,6 @@ export const StyledSettingButton = styled.button`
 export const StyledSettingHeader = styled.h1`
 font-family: Pixel, Arial, Helvetica, sans-serif;
 font-size: 1rem;
+text-align: center;
 color: white;
 `

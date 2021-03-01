@@ -1,8 +1,6 @@
 import React, { Component }  from 'react';
 import { StyledSettingButton, StyledSettingHeader } from './styles/StyledSettings';
 
-import Slider from './Slider';
-
 import Modal from './Modal.js';
 
 // const SettingButton = ({ callback }) => (
@@ -15,12 +13,12 @@ class Settings extends Component {
   constructor() {
     super();
     this.state = {
-      show: false
+      show: false,
+      audio: false
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
   }
-
 
   showModal = () => {
     this.setState({ show: true });
@@ -32,17 +30,11 @@ class Settings extends Component {
     this.setState({ show: false });
   };
 
-  
   render() {
-    
-  const { changeVolumeMusic, changeVolumeSound, volumeMusic, volumeSound } = this.props;
-
+    // console.log(this.props)
     return (
       <div>
-        <Modal show={this.state.show} handleClose={this.hideModal} >
-          <StyledSettingHeader>Settings</StyledSettingHeader>
-          <Slider title='Music sound' handleVolume={changeVolumeMusic} volume={volumeMusic} />
-          <Slider title='Sound effect' handleVolume={changeVolumeSound} volume={volumeSound} />
+        <Modal show={this.state.show} audio={this.props} handleClose={this.hideModal} >
         </Modal>
         <StyledSettingButton type="button" onClick={this.showModal}>
         Settings
@@ -51,6 +43,5 @@ class Settings extends Component {
     );
   }
 }
-
 
 export default Settings;

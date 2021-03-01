@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import useSound from 'use-sound';
 
-import sound from '../sound/02-a-type-music-version-1_1.mp3';
+import sound from '../sound/19.mp3';
 import revert from '../sound/revert.mp3';
 import moveBr from '../sound/leftRight.mp3';
 
@@ -27,7 +27,7 @@ const Tetris = () => {
   const [volumeMusic, setVolumeMusic] = useState(0.25);
   const [volumeSound, setVolumeSound] = useState(0.25);
 
-  const [play] = useSound(sound, { volume: volumeMusic });
+  const [play] = useSound(sound, { volume: volumeMusic, loop: true });
   const [moveBrick] = useSound(moveBr, { volume: volumeSound });
   const [revertBrick] = useSound(revert, { volume: volumeSound });
 
@@ -110,15 +110,15 @@ const Tetris = () => {
 
   const move = ({ keyCode }) => {
     if (!gameOver) {
-      if (keyCode === 37) {
+      if (keyCode === 37 || keyCode === 65) {
         movePlayer(-1);
         moveBrick();
-      } else if (keyCode === 39) {
+      } else if (keyCode === 39 || keyCode === 68) {
         movePlayer(1);
         moveBrick();
-      } else if (keyCode === 40) {
+      } else if (keyCode === 40 || keyCode === 83) {
         dropPlayer();
-      } else if (keyCode === 38) {
+      } else if (keyCode === 38 || keyCode === 87) {
         playerRotate(stage, 1);
         revertBrick();
       }
