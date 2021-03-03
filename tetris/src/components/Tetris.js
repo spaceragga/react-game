@@ -39,7 +39,7 @@ const Tetris = () => {
     rowsCleared
   );
 
-  console.log('re-render');
+  // console.log('re-render');
 
   
   const changeBg = () => {

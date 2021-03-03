@@ -165,7 +165,7 @@ class Modal extends Component {
   render() {
     const { handleClose, show, children } = this.props;
 
-    console.log(this.props)
+    // console.log(this.props)
 
     return (
       <StyledModal show={show}>
