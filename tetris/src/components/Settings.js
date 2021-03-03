@@ -3,12 +3,6 @@ import { StyledSettingButton, StyledSettingHeader } from './styles/StyledSetting
 
 import Modal from './Modal.js';
 
-// const SettingButton = ({ callback }) => (
-//   <StyledSettingButton onClick={callback}>Settings</StyledSettingButton>
-// )
-
-// export default SettingButton;
-
 class Settings extends Component {
   constructor() {
     super();
@@ -26,20 +20,24 @@ class Settings extends Component {
     this.props.stopGame(null);
   };
 
-  hideModal = (e) => {
-    e.preventDefault();
-
+  hideModal = () => {
     this.setState({ show: false });
 
-    this.props.stopGame(1000);
+    this.props.stopGame(this.props.speedGame);
     this.props.startGame();
+
+    document.getElementById("mainWrapp").focus();
   };
 
   render() {
     // console.log(this.props)
     return (
       <div>
-        <Modal show={this.state.show} audio={this.props} handleClose={this.hideModal} >
+        <Modal 
+        show={this.state.show} 
+        other={this.props} 
+        handleClose={this.hideModal}
+        >
         </Modal>
         <StyledSettingButton type="button" onClick={this.showModal}>
         Settings

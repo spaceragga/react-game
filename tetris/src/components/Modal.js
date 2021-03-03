@@ -58,7 +58,7 @@ class Modal extends Component {
 
   showAudio = () => {
 
-    const { changeVolumeMusic, changeVolumeSound, volumeMusic, volumeSound } = this.props.audio;
+    const { changeVolumeMusic, changeVolumeSound, volumeMusic, volumeSound } = this.props.other;
 
     return (
       <div>
@@ -73,7 +73,7 @@ class Modal extends Component {
 
   showGame = () => {
 
-    const { setImage, newGame, stopGame } = this.props.audio;
+    const { setImage, newGame, stopGame, setSpeedGame } = this.props.other;
 
 
     return (
@@ -91,7 +91,7 @@ class Modal extends Component {
           stopGame(null)}}>
           18x30
         </StyledModalBtnSmall>
-        <StyledModalBtnSmall type="button" onClick={(e) => {
+        <StyledModalBtnSmall type="button" onClick={() => {
           changeSize(10, 16); 
           newGame(); 
           stopGame(null)}}>
@@ -102,14 +102,20 @@ class Modal extends Component {
           ↻
         </StyledModalBtnSmall>
         <StyledSettingHeader>Change Speed</StyledSettingHeader>
-        <StyledModalBtnSmall type="button" onClick={(e) => {console.log(e)}}>
+        <StyledModalBtnSmall type="button" onClick={() => {
+          setSpeedGame(1000);
+        }}>
           x1
         </StyledModalBtnSmall>
-        <StyledModalBtnSmall type="button" onClick={(e) => {console.log(e)}}>
-          x0.8
+        <StyledModalBtnSmall type="button" onClick={() => {
+          setSpeedGame(700);
+        }}>
+          x0.7
         </StyledModalBtnSmall>
-        <StyledModalBtnSmall type="button" onClick={(e) => {console.log(e)}}>
-          x0.5
+        <StyledModalBtnSmall type="button" onClick={() => {
+          setSpeedGame(400);
+        }}>
+          x0.4
         </StyledModalBtnSmall>
         <StyledModalBtn type="button" onClick={() => {this.setState({ game: false, main: true})}}>
           Back
@@ -169,10 +175,10 @@ class Modal extends Component {
           {/* {audio ? children : ''} */}
        {children}
           {this.state.main ? this.mainSettings() : null}
-          {this.state.audio ? this.showAudio() : console.log('!')}
-          {this.state.game ? this.showGame() : console.log('!')}
-          {this.state.control ? this.showControl() : console.log('!')}
-          {this.state.statistics ? this.showStatistics() : console.log('!')}
+          {this.state.audio ? this.showAudio() : null}
+          {this.state.game ? this.showGame() : null}
+          {this.state.control ? this.showControl() : null}
+          {this.state.statistics ? this.showStatistics() : null}
           <StyledModalBtn type="button" onClick={handleClose}>
             Close
           </StyledModalBtn>

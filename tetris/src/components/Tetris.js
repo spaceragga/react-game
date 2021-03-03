@@ -27,6 +27,7 @@ const Tetris = () => {
   const [volumeMusic, setVolumeMusic] = useState(0.25);
   const [volumeSound, setVolumeSound] = useState(0.25);
   const [bgImage, setImage] = useState(image);
+  const [speedTime, setSpeedTime] = useState(1000);
 
   const [play, { stop, isPlaying }] = useSound(sound, { volume: volumeMusic, loop: true });
   const [moveBrick] = useSound(moveBr, { volume: volumeSound });
@@ -64,7 +65,7 @@ const Tetris = () => {
     if (!gameOver) {
       // activate the interval again when user releases down arrow.
       if (keyCode === 40) {
-        setDropTime(1000 / (level + 1));
+        setDropTime(speedTime / (level + 1));
       }
     }
   };
@@ -72,7 +73,7 @@ const Tetris = () => {
   const startGame = () => {
     // reset everything
     setStage(createStage());
-    setDropTime(1000);
+    setDropTime(speedTime);
     resetPlayer();
     setScore(0);
     setLevel(0);
@@ -94,7 +95,7 @@ const Tetris = () => {
     if (rows > (level + 1) * 10) {
       setLevel(prev => prev + 1);
       // also increase speed
-      setDropTime(1000 / (level + 1) + 200);
+      setDropTime(speedTime / (level + 1) + 200);
     }
 
     if (!checkCollision(player, stage, { x: 0, y: 1 })) {
@@ -141,6 +142,7 @@ const Tetris = () => {
 
   return (
     <StyledTetrisWrapper
+      id="mainWrapp"
       role="button"
       tabIndex="0"
       onKeyDown={e => move(e)}
@@ -167,6 +169,8 @@ const Tetris = () => {
            volumeSound={volumeSound}
            setImage={changeBg}
            stopGame={setDropTime} 
+           speedGame={speedTime}
+           setSpeedGame={setSpeedTime}
            startGame={drop}
            newGame={startGame} />
         </aside>
