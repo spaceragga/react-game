@@ -31,11 +31,17 @@ padding: 20px;
 min-height: 30px;
 width: 45%;
 border-radius: 20px;
-border: none;
+// border: none;
 color: white;
 background: #333;
 font-family: Pixel, Arial, Helvetica, sans-serif;
 font-size: 1rem;
 outline: none;
 cursor: pointer;
+`;
+
+export const StyledModalBtnSmall = styled(StyledModalBtn)`
+margin: 10px 10px;
+padding: 10px;
+width: 20%;
 `;

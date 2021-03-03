@@ -6,6 +6,8 @@ import sound from '../sound/19.mp3';
 import revert from '../sound/revert.mp3';
 import moveBr from '../sound/leftRight.mp3';
 
+import image from '../img/bg.png';
+
 import { createStage, checkCollision } from '../gameHelpers';
 import { StyledTetrisWrapper, StyledTetris } from './styles/StyledTetris';
 
@@ -26,6 +28,7 @@ const Tetris = () => {
   const [gameOver, setGameOver] = useState(false);
   const [volumeMusic, setVolumeMusic] = useState(0.25);
   const [volumeSound, setVolumeSound] = useState(0.25);
+  const [bgImage, setImage] = useState(image);
 
   const [play] = useSound(sound, { volume: volumeMusic, loop: true });
   const [moveBrick] = useSound(moveBr, { volume: volumeSound });
@@ -39,6 +42,19 @@ const Tetris = () => {
 
   console.log('re-render');
 
+  
+  const changeBg = () => {
+    const image = importAll(require.context('../img/', false, /\.(png|jpe?g|svg)$/));
+    
+    function importAll(r) {
+
+      return r.keys().map(r);
+    }
+
+    setImage(image[Math.floor(Math.random() * Math.floor(6))].default)
+    console.log(image[Math.floor(Math.random() * Math.floor(6))].default)
+  }
+
   const movePlayer = dir => {
     if (!checkCollision(player, stage, { x: dir, y: 0 })) {
       updatePlayerPos({ x: dir, y: 0 });
@@ -47,7 +63,7 @@ const Tetris = () => {
 
   const keyUp = ({ keyCode }) => {
     if (!gameOver) {
-      // Activate the interval again when user releases down arrow.
+      // activate the interval again when user releases down arrow.
       if (keyCode === 40) {
         setDropTime(1000 / (level + 1));
       }
@@ -55,7 +71,7 @@ const Tetris = () => {
   };
 
   const startGame = () => {
-    // Reset everything
+    // reset everything
     setStage(createStage());
     setDropTime(1000);
     resetPlayer();
@@ -75,17 +91,17 @@ const Tetris = () => {
   }
 
   const drop = () => {
-    // Increase level when player has cleared 10 rows
+    // increase level when cleared 10 rows
     if (rows > (level + 1) * 10) {
       setLevel(prev => prev + 1);
-      // Also increase speed
+      // also increase speed
       setDropTime(1000 / (level + 1) + 200);
     }
 
     if (!checkCollision(player, stage, { x: 0, y: 1 })) {
       updatePlayerPos({ x: 0, y: 1, collided: false });
     } else {
-      // Game over!
+      // game over
       if (player.pos.y < 1) {
         console.log('GAME OVER!!!');
         setGameOver(true);
@@ -96,8 +112,7 @@ const Tetris = () => {
   };
 
   const dropPlayer = () => {
-    // We don't need to run the interval when we use the arrow down to
-    // move the tetromino downwards. So deactivate it for now.
+
     setDropTime(null);
     drop();
   };
@@ -131,6 +146,7 @@ const Tetris = () => {
       tabIndex="0"
       onKeyDown={e => move(e)}
       onKeyUp={keyUp}
+      style={{ background: `url(${bgImage})` }}
     >
       <StyledTetris>
         <Stage stage={stage} />
@@ -149,7 +165,8 @@ const Tetris = () => {
            changeVolumeMusic={changeVolumeMusic}
            changeVolumeSound={changeVolumeSound}
            volumeMusic={volumeMusic}
-           volumeSound={volumeSound} />
+           volumeSound={volumeSound}
+           setImage={changeBg} />
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>
