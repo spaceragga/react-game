@@ -5,6 +5,7 @@ import useSound from 'use-sound';
 import sound from '../sound/19.mp3';
 import revert from '../sound/revert.mp3';
 import moveBr from '../sound/leftRight.mp3';
+import down from '../sound/down.mp3';
 
 import image from '../img/bg.jpg';
 
@@ -32,6 +33,7 @@ const Tetris = () => {
   const [play, { stop, isPlaying }] = useSound(sound, { volume: volumeMusic, loop: true });
   const [moveBrick] = useSound(moveBr, { volume: volumeSound });
   const [revertBrick] = useSound(revert, { volume: volumeSound });
+  const [revertDown] = useSound(down, { volume: volumeSound });
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
@@ -133,6 +135,7 @@ const Tetris = () => {
         moveBrick();
       } else if (keyCode === 40 || keyCode === 83) {
         dropPlayer();
+        revertDown();
       } else if (keyCode === 38 || keyCode === 87) {
         playerRotate(stage, 1);
         revertBrick();
