@@ -1,9 +1,16 @@
-export const STAGE_WIDTH = 12;
-export const STAGE_HEIGHT = 20;
+export const stageSize = {
+  width: 12,
+  height: 20
+};
+
+export const changeSize = (width, height) => {
+  stageSize.width = width; 
+  stageSize.width = height;
+};
 
 export const createStage = () => 
-    Array.from(Array(STAGE_HEIGHT), () =>
-        new Array(STAGE_WIDTH).fill([0, 'clear'])
+    Array.from(Array(stageSize.height), () =>
+        new Array(stageSize.width).fill([0, 'clear'])
 );
 
 export const checkCollision = (player, stage, { x: moveX, y: moveY }) => {

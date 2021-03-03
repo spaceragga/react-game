@@ -22,12 +22,17 @@ class Settings extends Component {
 
   showModal = () => {
     this.setState({ show: true });
+
+    this.props.stopGame(null);
   };
 
   hideModal = (e) => {
     e.preventDefault();
 
     this.setState({ show: false });
+
+    this.props.stopGame(1000);
+    this.props.startGame();
   };
 
   render() {

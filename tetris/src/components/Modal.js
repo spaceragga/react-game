@@ -5,6 +5,7 @@ import Slider from './Slider';
 import { StyledSettingButton, StyledSettingHeader } from './styles/StyledSettings';
 import {StyledModal, StyledModalMain, StyledModalBtn, StyledModalBtnSmall} from './styles/StyledModal'
 
+import { changeSize } from '../gameHelpers';
 // const Modal = ({ handleClose, show, audio, children }) => {
 // console.log(children)
 //   return (
@@ -72,19 +73,28 @@ class Modal extends Component {
 
   showGame = () => {
 
-    const { setImage } = this.props.audio;
+    const { setImage, newGame, stopGame } = this.props.audio;
 
 
     return (
       <div>
         <StyledSettingHeader>Stage Size</StyledSettingHeader>
-        <StyledModalBtnSmall type="button" onClick={(e) => {console.log(e)}}>
+        <StyledModalBtnSmall type="button" onClick={() => {
+          changeSize(12, 20); 
+          newGame(); 
+          stopGame(null)}}>
           12x20
         </StyledModalBtnSmall>
-        <StyledModalBtnSmall type="button" onClick={(e) => {console.log(e)}}>
+        <StyledModalBtnSmall type="button" onClick={() => {
+          changeSize(18, 30); 
+          newGame(); 
+          stopGame(null)}}>
           18x30
         </StyledModalBtnSmall>
-        <StyledModalBtnSmall type="button" onClick={(e) => {console.log(e)}}>
+        <StyledModalBtnSmall type="button" onClick={(e) => {
+          changeSize(10, 16); 
+          newGame(); 
+          stopGame(null)}}>
           10x16
         </StyledModalBtnSmall>
         <StyledSettingHeader>Change Bg</StyledSettingHeader>

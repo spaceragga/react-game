@@ -6,18 +6,16 @@ import sound from '../sound/19.mp3';
 import revert from '../sound/revert.mp3';
 import moveBr from '../sound/leftRight.mp3';
 
-import image from '../img/bg.png';
+import image from '../img/bg.jpg';
 
 import { createStage, checkCollision } from '../gameHelpers';
 import { StyledTetrisWrapper, StyledTetris } from './styles/StyledTetris';
 
-// Custom Hooks
 import { useInterval } from '../hooks/useInterval';
 import { usePlayer } from '../hooks/usePlayer';
 import { useStage } from '../hooks/useStage';
 import { useGameStatus } from '../hooks/useGameStatus';
 
-// Components
 import Stage from './Stage';
 import Display from './Display';
 import StartButton from './StartButton';
@@ -30,7 +28,7 @@ const Tetris = () => {
   const [volumeSound, setVolumeSound] = useState(0.25);
   const [bgImage, setImage] = useState(image);
 
-  const [play] = useSound(sound, { volume: volumeMusic, loop: true });
+  const [play, { stop, isPlaying }] = useSound(sound, { volume: volumeMusic, loop: true });
   const [moveBrick] = useSound(moveBr, { volume: volumeSound });
   const [revertBrick] = useSound(revert, { volume: volumeSound });
 
@@ -51,9 +49,10 @@ const Tetris = () => {
       return r.keys().map(r);
     }
 
-    setImage(image[Math.floor(Math.random() * Math.floor(6))].default)
-    console.log(image[Math.floor(Math.random() * Math.floor(6))].default)
+    setImage(image[Math.floor(Math.random() * Math.floor(9))].default);
+    console.log(stage)
   }
+  
 
   const movePlayer = dir => {
     if (!checkCollision(player, stage, { x: dir, y: 0 })) {
@@ -79,7 +78,7 @@ const Tetris = () => {
     setLevel(0);
     setRows(0);
     setGameOver(false);
-    play();
+    if(!isPlaying) play();
   };
 
   const changeVolumeMusic = (value) => {
@@ -166,7 +165,10 @@ const Tetris = () => {
            changeVolumeSound={changeVolumeSound}
            volumeMusic={volumeMusic}
            volumeSound={volumeSound}
-           setImage={changeBg} />
+           setImage={changeBg}
+           stopGame={setDropTime} 
+           startGame={drop}
+           newGame={startGame} />
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>
