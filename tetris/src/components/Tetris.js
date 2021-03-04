@@ -123,6 +123,11 @@ const Tetris = () => {
       // game over
       if (player.pos.y < 1) {
         console.log('GAME OVER!!!');
+
+        const allScore = JSON.parse(localStorage.getItem('saveStatistics'));
+        allScore.push([score, rows, level]);
+
+        localStorage.setItem('saveStatistics', JSON.stringify(allScore));
         setGameOver(true);
         setDropTime(null);
       }
@@ -136,8 +141,6 @@ const Tetris = () => {
     drop();
   };
 
-  // This one starts the game
-  // Custom hook by Dan Abramov
   useInterval(() => {
     drop();
   }, dropTime);
@@ -168,7 +171,6 @@ const Tetris = () => {
       onKeyDown={e => move(e)}
       onKeyUp={keyUp}
       style={{ background: `url(${bgImage})` }}
-      // load={() => console.log('!')}
     >
       <StyledTetris>
         <Stage stage={stage} />

@@ -1,28 +1,12 @@
 import React, { Component }  from 'react';
 
 import Slider from './Slider';
+import Statistics from './Statistics';
 
-import { StyledSettingButton, StyledSettingHeader } from './styles/StyledSettings';
+import { StyledSettingHeader } from './styles/StyledSettings';
 import {StyledModal, StyledModalMain, StyledModalBtn, StyledModalBtnSmall} from './styles/StyledModal'
 
 import { changeSize } from '../gameHelpers';
-// const Modal = ({ handleClose, show, audio, children }) => {
-// console.log(children)
-//   return (
-//     <StyledModal show={show}>
-//       <StyledModalMain>
-//         {/* {audio ? children : ''} */}
-//      {children}
-//         <StyledModalBtn type="button" onClick={(e) => {console.log(e)}}>
-//           Audio
-//         </StyledModalBtn>
-//         <StyledModalBtn type="button" onClick={handleClose}>
-//           Close
-//         </StyledModalBtn>
-//       </StyledModalMain>
-//     </StyledModal>
-//   );
-// };
 
 class Modal extends Component {
   constructor() {
@@ -145,16 +129,8 @@ class Modal extends Component {
     return (
       <div>
         <StyledSettingHeader>Statistics</StyledSettingHeader>
-        <StyledSettingHeader>1. </StyledSettingHeader>
-        <StyledSettingHeader>2. </StyledSettingHeader>
-        <StyledSettingHeader>3. </StyledSettingHeader>
-        <StyledSettingHeader>4. </StyledSettingHeader>
-        <StyledSettingHeader>5. </StyledSettingHeader>
-        <StyledSettingHeader>6. </StyledSettingHeader>
-        <StyledSettingHeader>7. </StyledSettingHeader>
-        <StyledSettingHeader>8. </StyledSettingHeader>
-        <StyledSettingHeader>9. </StyledSettingHeader>
-        <StyledSettingHeader>10. </StyledSettingHeader>
+
+          {Statistics()};
         <StyledModalBtn type="button" onClick={() => {this.setState({ statistics: false, main: true})}}>
           Back
         </StyledModalBtn>
@@ -172,7 +148,6 @@ class Modal extends Component {
         <StyledModalMain>
           <StyledSettingHeader>~ Settings ~</StyledSettingHeader>
 
-          {/* {audio ? children : ''} */}
        {children}
           {this.state.main ? this.mainSettings() : null}
           {this.state.audio ? this.showAudio() : null}
