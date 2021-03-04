@@ -22,6 +22,7 @@ import Stage from './Stage';
 import Display from './Display';
 import StartButton from './StartButton';
 import Settings from './Settings';
+import Footer from './Footer';
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
@@ -195,6 +196,7 @@ const Tetris = () => {
            newGame={startGame} />
         </aside>
       </StyledTetris>
+      <Footer />
     </StyledTetrisWrapper>
   );
 };
