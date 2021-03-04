@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import useSound from 'use-sound';
+import { useBeforeunload } from 'react-beforeunload';
 
 import sound from '../sound/19.mp3';
 import revert from '../sound/revert.mp3';
@@ -42,8 +43,23 @@ const Tetris = () => {
   );
 
   // console.log('re-render');
+  useBeforeunload(() => {
+    localStorage.setItem('savedAllStats', JSON.stringify([speedTime, score, rows, level, stage]));
+  });
 
-  
+  window.onload = () => {
+    const scoreLast = JSON.parse(localStorage.getItem('savedAllStats'));
+
+    setStage(scoreLast[4]);
+    setDropTime(scoreLast[0]);
+    resetPlayer();
+    setScore(scoreLast[1]);
+    setLevel(scoreLast[3]);
+    setRows(scoreLast[2]);
+    setGameOver(false);
+    if(!isPlaying) play();
+  }
+
   const changeBg = () => {
     const image = importAll(require.context('../img/', false, /\.(png|jpe?g|svg)$/));
     
@@ -151,6 +167,7 @@ const Tetris = () => {
       onKeyDown={e => move(e)}
       onKeyUp={keyUp}
       style={{ background: `url(${bgImage})` }}
+      // load={() => console.log('!')}
     >
       <StyledTetris>
         <Stage stage={stage} />
